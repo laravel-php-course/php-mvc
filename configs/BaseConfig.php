@@ -7,7 +7,7 @@ require_once "database.php";
 
 class BaseConfig
 {
-    private static array $configs;
+    private static $configs;
 
     /**
      * @return string|null
