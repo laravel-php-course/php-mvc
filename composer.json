@@ -11,5 +11,7 @@
             "email": "foruozanfar2000f@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "ext-mysqli": "*"
+    }
 }

@@ -2,10 +2,22 @@
 
 namespace App\core;
 
+use JetBrains\PhpStorm\Pure;
+
 class Application
 {
-    public static function run()
+
+    public Router $router;
+    public Request $request;
+
+    #[Pure] public function __construct()
     {
-        echo "run";
+        $this->request = new Request();
+        $this->router = new Router($this->request);
+    }
+
+    public function run()
+    {
+        $this->router->resolve();
     }
 }
