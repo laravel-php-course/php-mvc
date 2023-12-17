@@ -19,3 +19,4 @@ $app->router->get('/user', 'user');
 $app->router->get('/contact', 'contact');
 $app->router->post('contact', [SiteController::class, 'HandleContactForm']);
 $app->run();
+Log::info('test1');
