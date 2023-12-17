@@ -9,15 +9,17 @@ class Application
 
     public Router $router;
     public Request $request;
+    public static Application $app;
 
     #[Pure] public function __construct()
     {
+        self::$app     = $this;
         $this->request = new Request();
-        $this->router = new Router($this->request);
+        $this->router  = new Router($this->request);
     }
 
     public function run()
     {
-        $this->router->resolve();
+        echo $this->router->resolve();
     }
 }
