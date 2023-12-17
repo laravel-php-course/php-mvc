@@ -21,4 +21,4 @@ $app->router->get('/user', function () {
 });
 
 $app->run();
-Log::info('test21');
+Log::info('test1');
