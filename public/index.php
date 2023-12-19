@@ -15,8 +15,8 @@ Log::error('test');
 $app = new Application();
 
 $app->router->get('/', [SiteController::class, 'Home']);
-$app->router->get('/user', 'user');
-$app->router->get('/contact', 'contact');
-$app->router->post('contact', [SiteController::class, 'HandleContactForm']);
+$app->router->get('/user', [SiteController::class, 'user']);
+$app->router->get('/contact', [SiteController::class, 'contact']);
+$app->router->post('/contact', [SiteController::class, 'HandleContactForm']);
 $app->run();
 Log::info('test1');
