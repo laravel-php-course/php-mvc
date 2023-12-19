@@ -1,10 +1,30 @@
 <?php
 
+namespace App\database;
+
 use App\configs\BaseConfig;
+use App\core\Log;
+use Exception;
+use mysqli;
 
 class Connection
 {
-    public function connect()
+    /** @var mysqli $connection */
+    private static mysqli $connection;
+
+    private function __construct()
+    {
+    }
+
+    public static function create(): mysqli|false
+    {
+        if (self::isConnected())
+            return self::$connection;
+
+        return self::connect();
+    }
+
+    private static function connect(): mysqli|bool
     {
         $configs = [
             'Host' => BaseConfig::getConfigs('DB_HOST'),
@@ -20,17 +40,35 @@ class Connection
             mysqli_options($mysqli, MYSQLI_OPT_READ_TIMEOUT, 10);
             mysqli_options($mysqli, MYSQLI_OPT_INT_AND_FLOAT_NATIVE, true);
 
-            $mysqli->real_connect( $configs['Host'], $configs('User'), $configs('Pass'), $configs('Name'));
+
+            
+            $mysqli->real_connect($configs['Host'], $configs['User'], $configs['Pass'], $configs['Name']);
 
             if (!is_null($mysqli->connect_error))
-                $this->connect();
+            {
+                Log::error("DB Connection Failed, {$mysqli->connect_error}, " . mysqli_error($mysqli));
+                self::connect();
+            }
 
-            return $mysqli;
-
+            self::$connection = $mysqli;
+            //TODO Kourosh Add Log
         }
         catch (Exception $exception)
         {
-            //Log
+            $errorMessage = "Error: {$exception->getMessage()}, Line: {$exception->getLine()}, File: {$exception->getFile()}, DB Params:" .
+                print_r($configs, true);
+            Log::error($errorMessage);
         }
+        return self::$connection ?? false;
+    }
+
+    private static function isConnected(): bool
+    {
+        if (!empty(self::$connection) AND self::$connection->ping())
+        {
+            return true;
+        }
+
+        return false;
     }
 }
