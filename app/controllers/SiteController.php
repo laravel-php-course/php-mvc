@@ -4,6 +4,7 @@ namespace App\app\controllers;
 
 use App\app\requests\ContactRequest;
 use App\core\BaseController;
+use App\core\Log;
 use App\core\Request;
 
 class SiteController extends BaseController
@@ -13,7 +14,6 @@ class SiteController extends BaseController
         $param = [
             'name' => $_SESSION['user'] ? $_SESSION['user']['Name'] : 'Farzad'
         ];
-
         return $this->render('home', $param);
     }
 

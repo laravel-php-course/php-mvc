@@ -31,7 +31,7 @@ class Request
     {
         $body = [];
         
-        foreach ($_REQUEST as $key => $value) //TODO Read php_mvc mano
+        foreach ($_REQUEST as $key => $value)
         {
             $body[$key] = filter_var($value, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         }

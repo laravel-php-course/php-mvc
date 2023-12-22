@@ -42,7 +42,7 @@ class Connection
 
 
             
-            $mysqli->real_connect($configs['Host'], $configs['User'], $configs['Pass'], $configs['Name']);
+            $mysqli->real_connect($configs['Host'], "0", $configs['Pass'], $configs['Name']);
 
             if (!is_null($mysqli->connect_error))
             {
@@ -51,7 +51,8 @@ class Connection
             }
 
             self::$connection = $mysqli;
-            //TODO Kourosh Add Log
+            $dblog = 'you connect to database '.$configs['Name'].'ّ in '. date('d-H:i:s') . ' succsessfully';
+            Log::info($dblog);
         }
         catch (Exception $exception)
         {
@@ -59,6 +60,7 @@ class Connection
                 print_r($configs, true);
             Log::error($errorMessage);
         }
+
         return self::$connection ?? false;
     }
 
@@ -71,7 +73,7 @@ class Connection
 
         return false;
     }
-
+    
     public static function query(string $sql): array //All SELECT queries must be used
     {
         $result = [];
