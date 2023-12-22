@@ -73,5 +73,70 @@ class Connection
 
         return false;
     }
-}
+    
+    public static function query(string $sql): array //All SELECT queries must be used
+    {
+        $result = [];
+        $conn = self::create();
 
+        try {
+            $stmt = $conn->query($sql);
+            while (@$row = mysqli_fetch_array($stmt, MYSQLI_ASSOC))
+            {
+                $result[] = $row;
+            }
+        }
+        catch (Exception $exception)
+        {
+            $errorMessage = "Error: {$exception->getMessage()}, Line: {$exception->getLine()}";
+            Log::error($errorMessage);
+        }
+        return $result;
+    }
+
+    public static function queryFirst(string $sql): bool|array|null
+    {
+        $conn = self::create();
+        return $conn->query($sql)->fetch_assoc();
+    }
+
+    public static function db_insert(array $attributes, array $data, string $table): array|int|string|null
+    {
+        $conn = self::create();
+        $sql  = "INSERT INTO $table SET ";
+
+        for($i = 0; $i < count($attributes); $i++)
+        {
+            $sql .= "`{$attributes[$i]}` = '{$data[$attributes[$i]]}', ";
+        }
+
+        $sql = rtrim($sql, ", ");
+
+        try {
+            $result = $conn->query($sql);
+            if ($result)
+            {
+                return self::db_select($table, "", 'ID, Name, Email');
+            }
+
+            Log::error("Error Query: `$sql`, ". print_r([$conn, $result], true));
+        }
+        catch (Exception $exception)
+        {
+            Log::error($exception->getMessage());
+        }
+
+        return null;
+    }
+
+    public static function db_select(string $table, string $condition = null, $field = '*', $fetchAll = false, $orderBy = 'ID', $orderType = 'DESC'): bool|array|null //TODO Add Limit Params
+    {
+        $field = is_array($field) ? implode(', ', $field) : $field;
+        $where = $condition ? " WHERE $condition" : '';
+        $sql   = "SELECT {$field} FROM `$table` $where";
+        $sql  .= " ORDER BY $orderBy $orderType";
+        $sql  .= $fetchAll ? ';' : ' LIMIT 1;';
+
+        return $fetchAll ? self::query($sql) : self::queryFirst($sql);
+    }
+}

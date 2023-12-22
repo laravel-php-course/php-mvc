@@ -6,10 +6,6 @@ class Request
 {
     public array $errors = [];
 
-    public string $subject;
-    public string $email;
-    public string $body;
-
     public const RULE_REQUIRED = 'req';
     public const RULE_EMAIL = 'email';
     public const RULE_MIN = 'min';
@@ -89,11 +85,7 @@ class Request
 
     public function rules(): array
     {
-        return [
-            'subject' => [self::RULE_REQUIRED],
-            'email' => [self::RULE_REQUIRED, self::RULE_EMAIL],
-            'body' => [self::RULE_REQUIRED]
-        ];
+        return [];
     }
 
     private function addError(int|string $attr, string $rule, array $params = [])
@@ -120,5 +112,15 @@ class Request
     public function getFirstError(string $attribute)
     {
         return $this->errors[$attribute][0] ?? '';
+    }
+
+    public function hasError(string $attribute): bool
+    {
+        return !empty($this->errors[$attribute]);
+    }
+
+    public function old(string $attribute): string
+    {
+        return $this->{$attribute} ?? '';
     }
 }
