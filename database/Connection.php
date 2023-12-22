@@ -42,7 +42,7 @@ class Connection
 
 
             
-            $mysqli->real_connect($configs['Host'], "0", $configs['Pass'], $configs['Name']);
+            $mysqli->real_connect($configs['Host'], $configs['User'], $configs['Pass'], $configs['Name']);
 
             if (!is_null($mysqli->connect_error))
             {
@@ -105,9 +105,9 @@ class Connection
         $conn = self::create();
         $sql  = "INSERT INTO $table SET ";
 
-        for($i = 0; $i < count($attributes); $i++)
+        foreach($attributes as $attribute)
         {
-            $sql .= "`{$attributes[$i]}` = '{$data[$attributes[$i]]}', ";
+            $sql .= "`{$attribute}` = '{$data[$attribute]}', ";
         }
 
         $sql = rtrim($sql, ", ");
@@ -116,7 +116,11 @@ class Connection
             $result = $conn->query($sql);
             if ($result)
             {
+                if ($conn->insert_id != 0)
+                    return self::db_select($table, "ID={$conn->insert_id}", 'ID, Name, Email');
+                
                 return self::db_select($table, "", 'ID, Name, Email');
+
             }
 
             Log::error("Error Query: `$sql`, ". print_r([$conn, $result], true));

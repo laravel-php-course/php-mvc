@@ -12,7 +12,7 @@ class SiteController extends BaseController
     public function Home(): bool|array|string
     {
         $param = [
-            'name' => $_SESSION['user'] ? $_SESSION['user']['Name'] : 'Farzad'
+            'name' => isset($_SESSION['user']) ? $_SESSION['user']['Name'] : 'Guest'
         ];
         return $this->render('home', $param);
     }
@@ -25,12 +25,12 @@ class SiteController extends BaseController
     public function HandleContactForm(Request $request): bool|array|string
     {
         $contactRequest = new ContactRequest();
-        $contactRequest->loadData($contactRequest->getBody());
+        $contactRequest->loadData($request->getBody());
 
         if ($contactRequest->validate())
         {
             // TODO Add msg to db
-//            $contactRequest->emptyFields(); //TODO complete
+            /*$contactRequest->emptyFields();*/ //TODO complete
             return $this->render('contact', ['request' => $contactRequest]);
         }
         return $this->render('contact', ['request' => $contactRequest]);
