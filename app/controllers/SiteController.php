@@ -3,6 +3,7 @@
 namespace App\app\controllers;
 
 use App\core\BaseController;
+use App\core\Log;
 use App\core\Request;
 
 class SiteController extends BaseController
@@ -12,7 +13,6 @@ class SiteController extends BaseController
         $param = [
             'name' => 'Farzad'
         ];
-
         return $this->render('home', $param);
     }
 
