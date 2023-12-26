@@ -29,5 +29,6 @@ $app->router->get('/register', [AuthController::class, 'ShowRegisterForm']);
 $app->router->post('/register', [AuthController::class, 'HandleRegister']);
 $app->router->get('/login', [AuthController::class, 'ShowLoginForm']);
 $app->router->post('/login', [AuthController::class, 'HandleLogin']);
-
+$app->router->get('/profile', [AuthController::class, 'ShowProfile']);
+$app->router->get('/logOut', [AuthController::class, 'HandleLogOut']);
 $app->run();

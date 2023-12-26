@@ -21,6 +21,11 @@ class AuthController extends BaseController
 
         return $this->render('register', ['request' => $request]);
     }
+    public function ShowProfile(Request $request): bool|array|string
+    {
+
+        return $this->render('profile', ['request' => $request]);
+    }
 
 
     public function handleLogin(Request $request): bool|array|string
@@ -82,6 +87,10 @@ class AuthController extends BaseController
         return $this->render('register', [
             'request' => $registerRequest
         ]);
+    }
+    public function HandleLogOut(Request $request): bool|array|string
+    {
+        return $request ; //just for not being empty
     }
 
 }
