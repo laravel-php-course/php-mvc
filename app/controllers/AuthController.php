@@ -2,16 +2,18 @@
 
 namespace App\app\controllers;
 
+use App\app\requests\LoginRequest;
 use App\core\BaseController;
+use App\core\Log;
 use App\core\Request;
 use App\app\models\User;
 use App\app\requests\RegisterRequest;
 
 class AuthController extends BaseController
 {
-    public function showLoginForm(): bool|array|string
+    public function showLoginForm(Request $request): bool|array|string
     {
-        return $this->render('login');
+        return $this->render('login', ['request' => $request]);
     }
 
     public function showRegisterForm(Request $request): bool|array|string
@@ -20,28 +22,31 @@ class AuthController extends BaseController
         return $this->render('register', ['request' => $request]);
     }
 
+
     public function handleLogin(Request $request): bool|array|string
     {
-//
-//        $loginRequest = new LoginRequest();
-//        $loginRequest->loadData($request->getBody());
-//
-//        if ($loginRequest->validate())
-//        {
-//            if (User::login(['email' => $loginRequest->email, 'password' => $loginRequest->password]))
-//            {
-//                $this->redirect('/');
-//                return true;
-//            }
-//            else
-//            {
-//                $loginRequest->addError('email', 'The information are not correct');
-//            }
-//        }
-//
-//        return $this->render('login', [
-//            'request' => $loginRequest
-//        ]);
+
+        $loginRequest = new LoginRequest();
+        $loginRequest->loadData($request->getBody());
+
+        if ($loginRequest->validate())
+        {
+            if (User::login(['Email' => $loginRequest->Email, 'Password' => $loginRequest->Password]))
+            {
+                $this->redirect('/');
+                return true;
+
+            }
+
+            else
+            {
+                die(var_dump($loginRequest->Email , $loginRequest->Password));
+            }
+        }
+
+        return $this->render('login', [
+            'request' => $loginRequest
+        ]);
         return false;
     }
 

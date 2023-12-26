@@ -41,6 +41,7 @@ class Request
 
     public function loadData(array $data)
     {
+
         foreach ($data as $key => $value)
         {
             if (property_exists($this, $key))
@@ -52,10 +53,11 @@ class Request
 
     public function validate(): bool
     {
+
         foreach ($this->rules() as $attr => $rules)
         {
             $value = $this->{$attr};
-            
+
             foreach ($rules as $rule) {
                 $ruleName = '';
 
@@ -88,7 +90,7 @@ class Request
         return [];
     }
 
-    private function addError(int|string $attr, string $rule, array $params = [])
+    public function addError(int|string $attr, string $rule, array $params = [])
     {
         $message = $this->errorMessages()[$rule] ?? '';
 //        foreach ($params as $key => $value)

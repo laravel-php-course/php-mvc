@@ -114,6 +114,7 @@ class Connection
 
         try {
             $result = $conn->query($sql);
+
             if ($result)
             {
                 if ($conn->insert_id != 0)
