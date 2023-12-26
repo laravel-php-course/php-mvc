@@ -6,7 +6,12 @@ use App\core\BaseModel;
 
 class Massage extends BaseModel
 {
-    public static string $tableName;
+
+    public function tableName()
+    {
+        return 'msg' ;
+    }
+
     public array $attributes;
 
     public function __construct()
