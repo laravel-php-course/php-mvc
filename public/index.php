@@ -25,8 +25,9 @@ $app->router->get('/', [SiteController::class, 'Home']);
 $app->router->get('/user', 'user');
 $app->router->get('/contact', [SiteController::class, 'ShowContactForm']);
 $app->router->post('/contact', [SiteController::class, 'HandleContactForm']);
-
 $app->router->get('/register', [AuthController::class, 'ShowRegisterForm']);
 $app->router->post('/register', [AuthController::class, 'HandleRegister']);
+$app->router->get('/login', [AuthController::class, 'ShowLoginForm']);
+$app->router->post('/login', [AuthController::class, 'HandleLogin']);
 
 $app->run();

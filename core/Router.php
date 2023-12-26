@@ -32,7 +32,7 @@ class Router
 
         if (!$callback)
         {
-            die('404');
+            die(include_once BaseConfig::getConfigs('BASE_DIR')."/views/404.php");
         }
 
         if (is_array($callback))

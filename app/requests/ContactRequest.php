@@ -6,16 +6,16 @@ use App\core\Request;
 
 class ContactRequest extends Request
 {
-    public string $subject;
-    public string $email;
-    public string $body;
+    public string $Subject;
+    public string $Email;
+    public string $Body;
 
     public function rules():array
     {
         return [
-            'subject' => [self::RULE_REQUIRED],
-            'email' => [self::RULE_REQUIRED, self::RULE_EMAIL],
-            'body' => [self::RULE_REQUIRED]
+            'Subject' => [self::RULE_REQUIRED],
+            'Email' => [self::RULE_REQUIRED, self::RULE_EMAIL],
+            'Body' => [self::RULE_REQUIRED]
         ];
     }
 }

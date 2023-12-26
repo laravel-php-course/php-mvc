@@ -4,27 +4,27 @@
 <form action="" method="post">
     <div class="mb-3">
         <label for="subject" class="form-label">Subject</label>
-        <input value="<?= $request->old('subject') ?>" name="subject" type="text" class="form-control <?= $request->hasError('subject') ? 'is-invalid' : '';?>" id="subject">
+        <input value="<?= $request->old('Subject') ?>" name="Subject" type="text" class="form-control <?= $request->hasError('Subject') ? 'is-invalid' : '';?>" id="subject">
     </div>
 
-    <?php if ($request->hasError('subject')): ?>
+    <?php if ($request->hasError('Subject')): ?>
     <div class="alert alert-danger" role="alert">
-        <?= $request->getFirstError('subject'); ?>
+        <?= $request->getFirstError('Subject'); ?>
     </div>
     <?php endif;?>
     <div class="mb-3">
         <label for="exampleInputEmail1" class="form-label">Email address</label>
-        <input value="<?= $request->old('email') ?>" name="email" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        <input value="<?= $request->old('Email') ?>" name="Email" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
     </div>
     <div class="alert alert-danger" role="alert">
-        <?= $request->getFirstError('email'); ?>
+        <?= $request->getFirstError('Email'); ?>
     </div>
     <div class="mb-3">
         <label for="body" class="form-label">Body</label>
-        <textarea name="body" id="body" class="form-control" rows="5"><?= $request->old('body') ?></textarea>
+        <textarea name="Body" id="body" class="form-control" rows="5"><?= $request->old('Body') ?></textarea>
     </div>
     <div class="alert alert-danger" role="alert">
-        <?= $request->getFirstError('body'); ?>
+        <?= $request->getFirstError('Body'); ?>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
